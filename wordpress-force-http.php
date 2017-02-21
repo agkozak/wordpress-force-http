@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: WordPress Force HTTP
+Plugin Name: WordPress Force HTTP (Fork)
 Plugin URI: https://github.com/phikai/wordpress-force-http
 Description: Forces the front end of your WordPress site to HTTP when you only want the Admin over HTTPS
 Author: A. Kai Armstrong
@@ -11,7 +11,7 @@ Version: 0.1.3
 
 #http://yoast.com/wordpress-ssl-setup/
 function toz_force_http () {
-  if ( is_ssl() && !is_admin() ) {
+  if ( is_ssl() && ! is_admin() && ! current_user_can( 'customize' ) ) {
     if ( 0 === strpos($_SERVER['REQUEST_URI'], 'http') ) {
       wp_redirect(preg_replace('|^https://|', 'http://', $_SERVER['REQUEST_URI']), 301 );
       exit();
